@@ -24,8 +24,27 @@ def load_neos(neo_csv_path):
     :param neo_csv_path: A path to a CSV file containing data about near-Earth objects.
     :return: A collection of `NearEarthObject`s.
     """
-    # TODO: Load NEO data from the given CSV file.
-    return ()
+    # WIP: Load NEO data from the given CSV file.
+    neos = []
+    with open(neo_csv_path, 'r') as infile:
+        reader = csv.reader(infile)
+        # skip header (first row)
+        next(reader)
+        for row in reader:
+            # Extract necessary info
+            designation = row[3]
+            name = row[4]
+            diameter = row[15]
+            hazardous = True if row[7].lower() == 'y' else False
+            
+            # Instantiate NEO
+            neo = NearEarthObject(designation, name=name, diameter=diameter, \
+                                hazardous=hazardous)
+            
+            # Append to the list
+            neos.append(neo)
+            
+    return neos
 
 
 def load_approaches(cad_json_path):
@@ -34,5 +53,21 @@ def load_approaches(cad_json_path):
     :param cad_json_path: A path to a JSON file containing data about close approaches.
     :return: A collection of `CloseApproach`es.
     """
-    # TODO: Load close approach data from the given JSON file.
-    return ()
+    # WIP: Load close approach data from the given JSON file.
+    CAObjs = []
+    with open(cad_json_path, 'r') as infile:
+        # load json file to Python obj
+        cad = json.load(infile)
+        # Some necessary attributes in "fields"
+        fieldsAttr = ['des', 'cd', 'dist', 'v_rel']
+        # Find corresponding idexes of these fieldsAttr
+        AttIdx = [cad['fields'].index(attr) for attr in fieldsAttr]
+        
+        for data in cad['data']:
+            # Extract data corresponding fields attribute indexes 
+            # Then initiate CloseApproach() obj
+            ca = CloseApproach(designation=data[AttIdx[0]], time=data[AttIdx[1]], \
+                            distance=data[AttIdx[2]], velocity=data[AttIdx[3]])
+            # Append the CloseApproach() obj to the list
+            CAObjs.append(ca)
+    return CAObjs

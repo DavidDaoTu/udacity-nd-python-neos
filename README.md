@@ -24,7 +24,33 @@ An additional attribute, to store the NEO’s primary designation before the Clo
 Additionally, each of these classes should implement a __str__ method that produces a human-readable description of the contents of the object.
 
 2. Load data from CSV and JSON files into Python objects. (Task 2a: extract.py and database.py)
+
+The **load_neos** function loads NEO data from a CSV file.
+
+    + The function opens the given file for reading.
+    + The function uses the ***csv*** module to parse the file contents into a standard Python data structure (e.g. list, dict, etc).
+    + The function converts this raw data into a collection of ***NearEarthObjects***
+    + The function returns a collection of ***NearEarthObjects***
+
+The **load_approaches** method loads close approach data from a JSON file.
+
+    + The function opens the given file for reading.
+    + The function uses the json module to parse the file contents into a dict.
+    + The function converts this raw data into a collection of CloseApproach objects.
+    + The function returns a collection of CloseApproach objects.
+Data from the extraneous columns (CSV) and fields (JSON) shouldn’t be bound to the constructed NearEarthObjects and CloseApproaches.
+
+
+
+
+
+
 3. Link together Python objects and any required metadata in a database wrapper that supports basic inspection. (Task 2b: extract.py and database.py)
+
+
+
+
+
 4. Convert user-specified criteria to a collection of filters. (Task 3a)
 5. Query the collection of CloseApproach with a collection of filters. (Task 3b)
 6. Limit the values produced by an iterator to at most a maximum number. (Task 3c)

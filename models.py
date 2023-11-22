@@ -49,8 +49,8 @@ class NearEarthObject:
         # self.diameter = float('nan')
         # self.hazardous = False
         self.designation = designation
-        self.name = name
-        self.diameter = float(diameter)
+        self.name = name if name else None
+        self.diameter = float(diameter) if diameter else float('nan')
         self.hazardous = hazardous
 
         # Create an empty initial collection of linked approaches.
@@ -67,7 +67,7 @@ class NearEarthObject:
         # WIP: Use this object's attributes to return a human-readable string representation.
         # The project instructions include one possibility. Peek at the __repr__
         # method for examples of advanced string formatting.
-        return (f"A NearEarthObject {self.fullname} has a diameter of "
+        return (f"A NearEarthObject - {self.fullname} - has a diameter of "
                 f"{self.diameter:.3f} km and " \
                 + ("is" if self.hazardous else "is not ") \
                 + "potentially hazardous")
@@ -103,11 +103,11 @@ class CloseApproach:
         # You should coerce these values to their appropriate data type and handle any edge cases.
         # The `cd_to_datetime` function will be useful.
         kwargs = info
-        self._designation = kwargs['neo'].designation if kwargs.get('neo') else ''
+        self._designation = kwargs['designation'] if kwargs.get('designation') else ''
         # WIP: Use the cd_to_datetime function for this attribute.
         self.time = cd_to_datetime(kwargs['time']) if kwargs.get('time') else None
-        self.distance = kwargs['distance'] if kwargs.get('distance') else 0.0
-        self.velocity = kwargs['velocity'] if kwargs.get('velocity') else 0.0
+        self.distance = float(kwargs['distance']) if kwargs.get('distance') else 0.0
+        self.velocity = float(kwargs['velocity']) if kwargs.get('velocity') else 0.0
 
         # Create an attribute for the referenced NEO, originally None.
         self.neo = None
@@ -139,7 +139,7 @@ class CloseApproach:
         # method for examples of advanced string formatting.
         return (f"At {self.time_str} approaches Earth at a distance of " 
                 f"{self.distance:.2f} au and "
-                f"a velocity of {self.velocity} km/s")
+                f"a velocity of {self.velocity:.2f} km/s")
 
 
     def __repr__(self):
