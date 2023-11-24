@@ -45,7 +45,7 @@ class NEODatabase:
         # TODO: What additional auxiliary data structures will be useful?
         
 
-        # TODO: Link together the NEOs and their close approaches.
+        # WIP: Link together the NEOs and their close approaches.
         # Loop through each close approach
         for approach in self._approaches:
             # finding NEO by close object's designation
@@ -71,7 +71,7 @@ class NEODatabase:
         :param designation: The primary designation of the NEO to search for.
         :return: The `NearEarthObject` with the desired primary designation, or `None`.
         """
-        # TODO: Fetch an NEO by its primary designation.
+        # WIP: Fetch an NEO by its primary designation.
         for neo in self._neos:
             if designation == neo.designation:
                 return neo 
@@ -91,7 +91,7 @@ class NEODatabase:
         :param name: The name, as a string, of the NEO to search for.
         :return: The `NearEarthObject` with the desired name, or `None`.
         """
-        # TODO: Fetch an NEO by its name.
+        # WIP: Fetch an NEO by its name.
         for neo in self._neos:
             if name == neo.name:
                 return neo
@@ -111,6 +111,13 @@ class NEODatabase:
         :param filters: A collection of filters capturing user-specified criteria.
         :return: A stream of matching `CloseApproach` objects.
         """
-        # TODO: Generate `CloseApproach` objects that match all of the filters.
+        # WIP: Generate `CloseApproach` objects that match all of the filters.
         for approach in self._approaches:
+            notMatch = False
+            for f in filters:
+                if f and not f(approach):
+                    notMatch = True
+                    break 
+            if notMatch:
+                continue
             yield approach

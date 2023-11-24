@@ -43,17 +43,54 @@ Data from the extraneous columns (CSV) and fields (JSON) shouldn’t be bound to
 
 
 
-
-
 3. Link together Python objects and any required metadata in a database wrapper that supports basic inspection. (Task 2b: extract.py and database.py)
 
+The NEODatabase constructor captures and preprocesses a collection of NEOs and close approaches.
+
+    + The constructor captures and saves its arguments, a collection of NearEarthObject and a collection of CloseApproaches.
+    + The constructor precomputes auxiliary data structures to assist with the get_neo_by_designation and get_neo_by_name methods.
+    + At the end of the constructor, the .neo attribute is set on each close approach to the matching NearEarthObject.
+    + At the end of the constructor, the .approaches attribute is populated for each NearEarthObject with a collection of its close approaches.
+    + The get_neo_by_designation method fetches an NEO by its primary designation, or returns None if no matches are found.
+    + The get_neo_by_name method fetches an NEO by its name, or returns None if no matches are found.
 
 
 
+4. Convert user-specified criteria to a collection of filters. (Task 3a: filters.py)
 
-4. Convert user-specified criteria to a collection of filters. (Task 3a)
-5. Query the collection of CloseApproach with a collection of filters. (Task 3b)
-6. Limit the values produced by an iterator to at most a maximum number. (Task 3c)
+The **create_filters** function produces a collection that can be used by the query method to perform a search of close approaches.
+
+    + The function respects the --date filter mode.
+    + The function respects the --start-date filter mode.
+    + The function respects the --end-date filter mode.
+    + The function respects the --min-distance filter mode.
+    + The function respects the --max-distance filter mode.
+    + The function respects the --min-velocity filter mode.
+    + The function respects the --max-velocity filter mode.
+    + The function respects the --min-diameter filter mode.
+    + The function respects the --max-diameter filter mode.
+    + The function respects the --hazardous and --not-hazardous filter modes.
+The filters accurately produce results based on the user-specified options.
+
+
+
+5. Query the collection of CloseApproach with a collection of filters. (Task 3b: database.py)
+
+The NEODatabase’s query method generates a stream of CloseApproaches that match the filters returned by create_filters.
+
+    + A CloseApproach is generated if and only if it passes all predicates.
+    + The method generates a stream of matching results, and doesn’t precompute all matching results up front.
+
+
+
+6. Limit the values produced by an iterator to at most a maximum number. (Task 3c: filters.py)
+
+The limit function slices an iterator to its first n elements, at most.
+
+    + The function is correct even if the first argument isn’t an in-memory buffered aggregate data type (i.e. list, tuple, etc). That is, the function doesn’t slice directly into the iterator.
+    + The function doesn’t limit the results if the second argument is 0 or None.
+
+
 7. Write data from Python to CSV files or JSON files. (Task 4)
 8. Produce error-free code.
 
