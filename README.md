@@ -91,7 +91,15 @@ The limit function slices an iterator to its first n elements, at most.
     + The function doesn’t limit the results if the second argument is 0 or None.
 
 
-7. Write data from Python to CSV files or JSON files. (Task 4)
+7. Write data from Python to CSV files or JSON files. (Task 4: write.py)
+
+The write_to_json function writes a stream of CloseApproach objects to a file in JSON format.
+
+    + The function opens the file for writing.
+    + The function prepares the stream of results according to the JSON output format specification in the instructions.
+    + The function uses the json module to write the data to the file.
+
+
 8. Produce error-free code.
 
 
