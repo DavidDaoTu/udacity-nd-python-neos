@@ -42,19 +42,18 @@ class NEODatabase:
         self._neos = neos
         self._approaches = approaches
 
-        # TODO: What additional auxiliary data structures will be useful?
-        
+        # WIP: What additional auxiliary data structures will be useful? (later)        
 
-        # WIP: Link together the NEOs and their close approaches.
+        # Link together the NEOs and their close approaches.
         # Loop through each close approach
         for approach in self._approaches:
-            # finding NEO by close object's designation
+            # Finding NEO by close object's designation
             neo = self.get_neo_by_designation(approach._designation)
             # If close approach's _designation matches with a NEO
             if neo:
-                # linking that NEO to Close Object's neo 
+                # Linking that NEO to Close Object's neo 
                 approach.neo = neo
-                # linking the current close object approach to correspongind neo
+                # Linking the current close object approach to correspongind neo
                 neo.approaches.append(approach)
                 
 
@@ -71,7 +70,7 @@ class NEODatabase:
         :param designation: The primary designation of the NEO to search for.
         :return: The `NearEarthObject` with the desired primary designation, or `None`.
         """
-        # WIP: Fetch an NEO by its primary designation.
+        # Fetch an NEO by its primary designation.
         for neo in self._neos:
             if designation == neo.designation:
                 return neo 
@@ -91,7 +90,7 @@ class NEODatabase:
         :param name: The name, as a string, of the NEO to search for.
         :return: The `NearEarthObject` with the desired name, or `None`.
         """
-        # WIP: Fetch an NEO by its name.
+        # Fetch an NEO by its name.
         for neo in self._neos:
             if name == neo.name:
                 return neo
@@ -111,7 +110,7 @@ class NEODatabase:
         :param filters: A collection of filters capturing user-specified criteria.
         :return: A stream of matching `CloseApproach` objects.
         """
-        # WIP: Generate `CloseApproach` objects that match all of the filters.
+        # Generate `CloseApproach` objects that match all of the filters.
         for approach in self._approaches:
             notMatch = False
             for f in filters:
